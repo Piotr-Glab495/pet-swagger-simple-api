@@ -7,8 +7,8 @@
 	let error: string | null = null;
 	let filterStatus: string = 'available';
 
-	async function loadPets() {
-		const res = await getPets();
+	async function loadPets(status: string = 'available') {
+		const res = await getPets(status);
 		if ('error' in res) error = res.error;
 		else pets = res;
 	}
@@ -16,11 +16,11 @@
 	async function remove(id: number) {
 		const res = await deletePet(id);
 		if ('error' in res) error = res.error;
-		else await loadPets();
+		else await loadPets(filterStatus);
 	}
 
 	function onFilterChange() {
-        loadPets();
+        loadPets(filterStatus);
     }
 
 	onMount(loadPets);
